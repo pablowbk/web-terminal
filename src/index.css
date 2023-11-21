@@ -1,15 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.input-container::before {
-  content: ">";
-  position: absolute;
+:root {
+  --green: #26e400;
+  --terminal-bg: #161616;
+}
+
+html {
+  font-family: 'B612 Mono', monospace;
+  font-weight: 600;
+  background-color: var(--terminal-bg);
+}
+
+.output-container,
+.input-container {
+  color: var(--green);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.51);
+}
+
+.input-container {
+}
+
+.input-container::before,
+.output-line::before {
+  content: '>';
+  padding-inline-end: 8px;
+  /* position: absolute; */
 }
 
 .terminal-input {
-  background-color: #000;
-  color: #fff;
   width: auto;
   min-width: 0;
+}
+
+.input-caret {
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  height: 20px;
+  width: 10px;
+  background-color: var(--green);
+  opacity: 0.8;
+  animation: caret 1.4s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
 }
