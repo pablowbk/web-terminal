@@ -50,7 +50,7 @@ function App() {
       {/* Output */}
       <div className="output-container">
         {output?.map((line, i) => (
-          <p key={i} className="output-line">
+          <p key={i} className="output-line whitespace-pre">
             {line}
           </p>
         ))}

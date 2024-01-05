@@ -10,11 +10,24 @@ const commands: {
     setOutput((prev) => [...prev, 'Hi']);
   },
   install(setOutput, args) {
-    const input = `Installing... ${JSON.stringify(args)}`;
-    setOutput((prev) => [...prev, input || '']);
+    let output = '';
+    if (args) {
+      output = `Installing... ${JSON.stringify(args)}`;
+    } else {
+      output = '"install" requires at least one argument.';
+    }
+    setOutput((prev) => [...prev, output || '']);
   },
   clear(setOutput) {
     setOutput([]);
+  },
+  help(setOutput) {
+    const output = `These are all the available commands:\n
+      hello: prints a reply greeting to the console.\n
+      install: <args> installs the specified program.\n
+      clear: Resets terminal.\n 
+    `;
+    setOutput((prev) => [...prev, output || '']);
   },
 };
 
