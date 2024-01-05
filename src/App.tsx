@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import invalidKeys from './constants/invalidKeys';
+import commands from './constants/commands';
 
 function App() {
   const [output, setOutput] = useState<string[]>([]);
   const [input, setInput] = useState<string>('');
 
+  const validateInput = () => {
+    const [command, args] = input.split(' ');
+    if (commands[command as keyof typeof commands]) {
+      console.log({ command, args });
+      commands[command](setOutput, args);
+    } else {
+      const commandNotFound = `Unknown command "${command}"`;
+      setOutput((prev) => [...prev, commandNotFound]);
+    }
+    setInput('');
+  };
+
   const handleKeyDown = (e: KeyboardEvent) => {
-    console.log(e);
-    // const allowedKeys = /^[a-zA-Z0-9.,\s]+$/; // pattern to allow letters, numbers, dot, comma, and space
-    // if (!allowedKeys.test(e.key)) return; // if the pressed key doesn't match the pattern, return
+    if (invalidKeys.has(e.key)) return; // if the pressed key doesn't match the pattern, return
 
     if (e.key === 'Backspace') {
       setInput((prev) => prev.split('').slice(0, -1).join(''));
@@ -16,8 +28,7 @@ function App() {
     }
 
     if (e.key === 'Enter') {
-      setOutput((prev) => [...prev, input || '']);
-      setInput('');
+      validateInput();
       return;
     }
 
